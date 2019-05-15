@@ -14,13 +14,13 @@ def func(x):
     """
     модельная функция
     """
-    y = (0.79*(np.sin(2*np.pi/24*x) +
-         np.exp(-(x - 70)**2/100) +
-         np.exp(-(x - 130)**2/130) +
-         0.5*np.sin(np.heaviside(x-96, 76)*2*np.pi/27.4*x) +
-         np.exp(-(np.heaviside(x-57, 1)*x - 200)**2/200)*np.sin(0.01*x) +
-         0.01*np.heaviside(157-x, 1)*np.sin(2*np.pi*x/365)) + 20)
-#    y = 2*np.sin(2*np.pi*x/12) + 0.5*np.cos(2*np.pi*x/10)+ 23 - np.abs(x-100)/20
+    y = ((0.79*(np.sin(2*np.pi/24*x) +
+          np.exp(-(x - 70)**2/100) +
+          np.exp(-(x - 130)**2/130) +
+          0.5*np.sin(np.heaviside(x-96, 76)*2*np.pi/27.4*x) +
+          np.exp(-(np.heaviside(x-57, 1)*x - 200)**2/200)*np.sin(0.01*x) +
+          0.01*np.heaviside(157-x, 1)*np.sin(2*np.pi*x/365)) + 20))
+#   y = 2*np.sin(2*np.pi*x/12) + 0.5*np.cos(2*np.pi*x/10)+23 - np.abs(x-100)/20
     return y
 
 
@@ -64,7 +64,7 @@ rho_f = np.array([44.91039,
                   63.06809,
                   88.22947])
 
-#rho = np.array([80.95694,
+# rho = np.array([80.95694,
 #                202.67597,
 #                416.18312,
 #                547.87912,
@@ -74,10 +74,11 @@ rho_f = np.array([44.91039,
 #                845.19282,
 #                925.00858,
 #                950.9487])
-                
+
 # восстаовленные зависимости
 s = [UnivariateSpline(x, y, k=5, s=rho[i]) for i in range(np.size(rho))]
-s_f = [UnivariateSpline(x_f, y_f, k=5, s=rho_f[i]) for i in range(np.size(rho_f))]
+s_f = [UnivariateSpline(x_f, y_f, k=5, s=rho_f[i])
+       for i in range(np.size(rho_f))]
 # восстановленные зависимости в моменты времени измерений
 y_dependences = np.array([s_i(x) for s_i in s])
 
@@ -111,17 +112,17 @@ norm_rem = np.linalg.norm(
 norm_func = np.linalg.norm(y_pure)
 norm = np.linalg.norm([y_pure-spline(x) for spline in s], axis=1)/norm_func
 
-norm_noise_f = np.linalg.norm(noise_f)                      
+norm_noise_f = np.linalg.norm(noise_f)
 norm_rem_f = np.linalg.norm(
-                       [y_f-spline(x_f)-noise_f for spline in s_f], axis=1)/norm_noise_f
+             [y_f-spline(x_f)-noise_f for spline in s_f], axis=1)/norm_noise_f
 
-norm_f = np.linalg.norm([y_pure-spline(x) for spline in s_f], axis=1)/norm_func                      
-                      
+norm_f = np.linalg.norm([y_pure-spline(x) for spline in s_f], axis=1)/norm_func
+
 if __name__ == "__main__":
     """
     plt.figure(1, figsize=(16, 9))
     plt.title("Signal")
-    plt.plot(x_f[:500], y_f[:500], "k-", 
+    plt.plot(x_f[:500], y_f[:500], "k-",
              x_f[500:900], y_f[500:900], "k-",
              x_f[900:], y_f[900:], "k-")
     plt.ylim(18, 23)
@@ -151,7 +152,7 @@ if __name__ == "__main__":
 #########
 # Splines
 #########
-    
+
     plt.figure(16, figsize=(16, 9))
     plt.title("Spline(%.2f)" %rho_f[0])
     plt.plot(x, y_1_f, "-k")
@@ -159,7 +160,7 @@ if __name__ == "__main__":
     plt.subplots_adjust(left=0.04, bottom=0.04, right=0.98, top=0.96)
     plt.legend(['spline(%.2f)' %rho_f[0]])
     plt.savefig('spline_1_f.pdf', dpi=300)
-    
+
     plt.figure(17, figsize=(16, 9))
     plt.title("Spline(%.2f)" %rho_f[1])
     plt.plot(x, y_2_f, "-b")
@@ -187,7 +188,7 @@ if __name__ == "__main__":
 #######
 # Noise
 #######
-    
+
     plt.figure(10, figsize=(16, 9))
     plt.title("Remains(%.2f)" %rho_f[0])
     plt.plot(x_f[:500], err_y1_f[:500], "g-",
@@ -229,8 +230,6 @@ if __name__ == "__main__":
     plt.savefig('remnands_4_f.pdf', dpi=300)
     """
 
-    
-
     """
     plt.figure(1, figsize=(16, 9))
     plt.title("Signal")
@@ -254,12 +253,12 @@ if __name__ == "__main__":
     plt.ylim(-2, 3)
     plt.subplots_adjust(left=0.04, bottom=0.04, right=0.98, top=0.96)
     plt.legend(['real noise'])
-    plt.savefig('data_real_noise.pdf', dpi=300)    
-    
+    plt.savefig('data_real_noise.pdf', dpi=300)
+
 #########
 # Splines
 #########
-    
+
     plt.figure(16, figsize=(16, 9))
     plt.title("Spline(%.2f)" %rho[1])
     plt.plot(x, y_1, "-k")
@@ -267,7 +266,7 @@ if __name__ == "__main__":
     plt.subplots_adjust(left=0.04, bottom=0.04, right=0.98, top=0.96)
     plt.legend(['spline(%.2f)' %rho[1]])
     plt.savefig('spline_1.pdf', dpi=300)
-    
+
     plt.figure(17, figsize=(16, 9))
     plt.title("Spline(%.2f)" %rho[2])
     plt.plot(x, y_2, "-k")
@@ -315,11 +314,11 @@ if __name__ == "__main__":
     plt.subplots_adjust(left=0.04, bottom=0.04, right=0.98, top=0.96)
     plt.legend(['spline(%.2f)' %rho[7]])
     plt.savefig('spline_7.pdf', dpi=300)
-    
+
 #######
 # Noise
 #######
-    
+
     plt.figure(10, figsize=(16, 9))
     plt.title("Remains(%.2f)" %rho[1])
     plt.plot(x, err_y1, "-k")
@@ -359,7 +358,7 @@ if __name__ == "__main__":
     plt.subplots_adjust(left=0.04, bottom=0.04, right=0.98, top=0.96)
     plt.legend(['remains(%.2f)' %rho[5]])
     plt.savefig('remnands_5.pdf', dpi=300)
-    
+
     plt.figure(15, figsize=(16, 9))
     plt.title("Remains(%.2f)" %rho[6])
     plt.plot(x, err_y6, "-k")
@@ -367,7 +366,7 @@ if __name__ == "__main__":
     plt.subplots_adjust(left=0.04, bottom=0.04, right=0.98, top=0.96)
     plt.legend(['remains(%.2f)' %rho[6]])
     plt.savefig('remnands_6.pdf', dpi=300)
-    
+
     plt.figure(19, figsize=(16, 9))
     plt.title("Remains(%.2f)" %rho[7])
     plt.plot(x, err_y7, "-k")
@@ -376,18 +375,8 @@ if __name__ == "__main__":
     plt.legend(['remains(%.2f)' %rho[7]])
     plt.savefig('remnands_7.pdf', dpi=300)
     """
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    """    
+
+    """
     plt.figure(1, figsize=(16, 9))
     plt.title("Signal")
     plt.plot(x, y, "k-")
@@ -412,11 +401,11 @@ if __name__ == "__main__":
     plt.legend(['real noise'])
     plt.savefig('data_real_noise_2.pdf', dpi=300)
 
-    
+
 #########
 # Splines
 #########
-    
+
     plt.figure(16, figsize=(16, 9))
     plt.title("Spline(%.2f)" %rho[1])
     plt.plot(x, y_1, "-k")
@@ -424,7 +413,7 @@ if __name__ == "__main__":
     plt.subplots_adjust(left=0.04, bottom=0.04, right=0.98, top=0.96)
     plt.legend(['spline(%.2f)' %rho[1]])
     plt.savefig('spline_1_2.pdf', dpi=300)
-    
+
     plt.figure(17, figsize=(16, 9))
     plt.title("Spline(%.2f)" %rho[2])
     plt.plot(x, y_2, "-k")
@@ -472,11 +461,11 @@ if __name__ == "__main__":
     plt.subplots_adjust(left=0.04, bottom=0.04, right=0.98, top=0.96)
     plt.legend(['spline(%.2f)' %rho[7]])
     plt.savefig('spline_7_2.pdf', dpi=300)
-    
+
 #######
 # Noise
 #######
-    
+
     plt.figure(10, figsize=(16, 9))
     plt.title("Remains(%.2f)" %rho[1])
     plt.plot(x, err_y1, "-k")
@@ -516,7 +505,7 @@ if __name__ == "__main__":
     plt.subplots_adjust(left=0.04, bottom=0.04, right=0.98, top=0.96)
     plt.legend(['remains(%.2f)' %rho[5]])
     plt.savefig('remnands_5_2.pdf', dpi=300)
-    
+
     plt.figure(15, figsize=(16, 9))
     plt.title("Remains(%.2f)" %rho[6])
     plt.plot(x, err_y6, "-k")
@@ -524,7 +513,7 @@ if __name__ == "__main__":
     plt.subplots_adjust(left=0.04, bottom=0.04, right=0.98, top=0.96)
     plt.legend(['remains(%.2f)' %rho[6]])
     plt.savefig('remnands_6_2.pdf', dpi=300)
-    
+
     plt.figure(19, figsize=(16, 9))
     plt.title("Remains(%.2f)" %rho[7])
     plt.plot(x, err_y7, "-k")

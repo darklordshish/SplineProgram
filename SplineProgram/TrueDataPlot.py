@@ -18,7 +18,7 @@ class TrueDataPlot(PlotWidget):
     def __init__(self,):
         """
         """
-        super().__init__()
+        super(TrueDataPlot, self).__init__()
         self.x = np.linspace(0, 10, 100)
         self.y = np.ones(100)
         self.setBackground('w')

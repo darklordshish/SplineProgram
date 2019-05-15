@@ -24,7 +24,7 @@ class Ui_SplineWidget_3_0(object):
         self.MainWidget = QtWidgets.QTabWidget(SplineWidget_3_0)
         self.MainWidget.setObjectName("MainWidget")
         self.tab = QtWidgets.QWidget()
-        self.tab.setObjectName("tab")
+        self.tab.setObjectName("1 step")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.tab)
         self.gridLayout_4.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_4.setObjectName("gridLayout_4")
@@ -45,6 +45,28 @@ class Ui_SplineWidget_3_0(object):
         self.MainWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(SplineWidget_3_0)
 
+    def newTab(self, n):
+        self.tab = QtWidgets.QWidget()
+        self.tab.setObjectName("{} step".format(n))
+        self.gridLayout_4 = QtWidgets.QGridLayout(self.tab)
+        self.gridLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_4.setObjectName("gridLayout_4")
+        self.gridLayout_3 = QtWidgets.QGridLayout()
+        self.gridLayout_3.setObjectName("gridLayout_3")
+        self.NextStepButton = QtWidgets.QPushButton(self.tab)
+        self.NextStepButton.setObjectName("NextStepButton")
+        self.gridLayout_3.addWidget(self.NextStepButton, 1, 0, 1, 1)
+        self.widget = Ui_SplineWidget()
+        self.widget.setObjectName("widget")
+        self.gridLayout_3.addWidget(self.widget, 0, 0, 1, 1)
+        self.gridLayout_4.addLayout(self.gridLayout_3, 0, 0, 1, 1)
+        self.MainWidget.addTab(self.tab, "{}".format(n))
+
+
+        self.retranslateUi(SplineWidget_3_0)
+        self.MainWidget.setCurrentIndex(0)
+        QtCore.QMetaObject.connectSlotsByName(SplineWidget_3_0)
+
     def retranslateUi(self, SplineWidget_3_0):
         _translate = QtCore.QCoreApplication.translate
         SplineWidget_3_0.setWindowTitle(_translate("SplineWidget_3_0",
@@ -52,7 +74,7 @@ class Ui_SplineWidget_3_0(object):
         self.NextStepButton.setText(_translate("SplineWidget_3_0",
                                                "Next Step"))
         self.MainWidget.setTabText(self.MainWidget.indexOf(self.tab),
-                                   _translate("SplineWidget_3_0", "Tab 1"))
+                                   _translate("SplineWidget_3_0", "Step 1"))
 
 
 if __name__ == "__main__":

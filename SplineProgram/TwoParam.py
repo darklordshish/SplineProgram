@@ -16,7 +16,7 @@ class TwoParam(QWidget):
 
     """
     def __init__(self,):
-        super().__init__()
+        super(TwoParam, self).__init__()
         self.setupUi()
 
     def setupUi(self,):
@@ -36,7 +36,7 @@ class TwoParam(QWidget):
         self.gridLayout_2.addLayout(self.gridLayout, 0, 0, 1, 1)
 
         # self.retranslateUi(TwoParam)
-        QtCore.QMetaObject.connectSlotsByName(self)
+        #QtCore.QMetaObject.connectSlotsByName(self)
 
         """Slots and Signals"""
         self.ParamPlot_1.xLine.sigLineXPos[float].connect(

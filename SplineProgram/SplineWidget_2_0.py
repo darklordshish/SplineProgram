@@ -49,7 +49,7 @@ class Ui_SplineWidget(QWidget):
     Plausibility and Believability
     """
     def __init__(self,):
-        super().__init__()
+        super(Ui_SplineWidget, self).__init__()
         self.setupUi()
 
     def setupUi(self,):
@@ -288,8 +288,8 @@ class Ui_SplineWidget(QWidget):
         self.windowTrueData = TrueDataPlot()
         self.windowTrueData.setWindowTitle("Data")
 
-        self.x = np.load("data_x_2.npy")  # np.linspace(0, 200, 200)
-        self.y = np.load("data_y_2.npy")  # self.func_rand(self.x)
+        self.x = np.load("initial_data/data_x_2.npy")  # np.linspace(0, 200, 200)
+        self.y = np.load("initial_data/data_y_2.npy")  # self.func_rand(self.x)
 
         self.example_model = True
         self.NextSplineModel = None

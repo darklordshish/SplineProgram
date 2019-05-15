@@ -1,13 +1,10 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Tue Oct 17 13:32:17 2017
+Created on Sun Nov 13 18:30:15 2016
 
 @author: semion
 """
-# import numpy as np
-from Parameter.py import Parameter
-from Result.py import Result
+import numpy as np
 
 
 class Function(object):
@@ -22,6 +19,53 @@ class Function(object):
         else:
             self.f = lambda x, y: x + y
         self.function_data = func_data
+
+
+class Parameter():
+    """
+    """
+    def __init__(self, num=100):
+        self.num = num
+        self.Min = 0
+        self.Max = 1
+        self.diskrete = False
+        self.param_greed = np.linspace(self.Min, self.Max, self.num)
+
+    def ChangeAll(self, num=100, Min=0, Max=1, Disktete=False):
+        self.num = num
+        self.Min = Min
+        self.Max = Max
+        self.diskrete = Disktete
+        self.param_greed = np.linspace(Min, Max, num)
+
+    def ChangeNum(self, num=100):
+        self.num = num
+        self.param_greed = np.linspace(self.Min, self.Max, num)
+
+    def ChangeMin(self, Min=0):
+        self.Min = Min
+        self.param_greed = np.linspace(Min, self.Max, self.num)
+
+    def ChangeMax(self, Max=1):
+        self.Max = Max
+        self.param_greed = np.linspace(self.Min, Max, self.num)
+
+
+class Result():
+    """
+    """
+    def __init__(self, num=100):
+        self.num = num
+        self.min = None
+        self.max = None
+        self.meaning = []
+
+    def Update(self, Num=100, Meaning=[]):
+        self.num = Num
+        if Meaning:
+            self.min = np.min(Meaning)
+            self.max = np.max(Meaning)
+            self.meaning = Meaning
 
 
 class Model():

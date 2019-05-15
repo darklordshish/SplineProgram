@@ -27,7 +27,7 @@ class myViewBox(ViewBox):
     """
     def __init__(self, parent_plot_widget, *args, **kwargs):
         self.parent_plot_widget = parent_plot_widget
-        super().__init__(*args, **kwargs)
+        super(myViewBox, self).__init__(*args, **kwargs)
 
     def raiseContextMenu(self, event):
         if self.parent_plot_widget.removePoint(event):
@@ -49,7 +49,7 @@ class infiniteLine(InfiniteLine):
     sigLineXPos = QtCore.pyqtSignal(float, name="lineXPos")
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super(infiniteLine, self).__init__(*args, **kwargs)
         self.sigPositionChangeFinished.connect(self.getLineXPos)
         self.sigDragged.connect(self.getLineXPos)
 
